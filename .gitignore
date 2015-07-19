@@ -1,0 +1,7 @@
+*.jpeg
+*.jpg
+*.JPG
+*.png
+*.PNG
+tmp.prototxt
+.vagrant
