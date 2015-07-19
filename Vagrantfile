@@ -33,5 +33,9 @@ Vagrant.configure(2) do |config|
     if [ ! -f "/home/vagrant/caffe/models/bvlc_googlenet/bvlc_googlenet.caffemodel" ]; then
         wget -q http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel -O /home/vagrant/caffe/models/bvlc_googlenet/bvlc_googlenet.caffemodel
     fi
+
+    # Disable python logging to remove clutter from deepdream outputs
+    echo "import os
+os.environ['GLOG_minloglevel'] = '2'" | cat - /home/vagrant/caffe/python/caffe/__init__.py > /tmp/setup && sudo mv /tmp/setup /home/vagrant/caffe/python/caffe/__init__.py
   SHELL
 end
