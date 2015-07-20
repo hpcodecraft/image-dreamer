@@ -34,8 +34,15 @@ Vagrant.configure(2) do |config|
         wget -q http://dl.caffe.berkeleyvision.org/bvlc_googlenet.caffemodel -O /home/vagrant/caffe/models/bvlc_googlenet/bvlc_googlenet.caffemodel
     fi
 
-    # Disable python logging to remove clutter from deepdream outputs
+    # Disable pycaffee logging to remove clutter from deepdream output
     echo "import os
-os.environ['GLOG_minloglevel'] = '2'" | cat - /home/vagrant/caffe/python/caffe/__init__.py > /tmp/setup && sudo mv /tmp/setup /home/vagrant/caffe/python/caffe/__init__.py
+os.environ['GLOG_minloglevel'] = '3'" | cat - /home/vagrant/caffe/python/caffe/__init__.py > /tmp/setup && sudo mv /tmp/setup /home/vagrant/caffe/python/caffe/__init__.py
+    # Setup cron job to automate dreaming
+    echo "SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+PYTHONPATH=/home/vagrant/caffe/python:
+* * * * * /vagrant/cron.sh >> /vagrant/dream.log" > /tmp/dreamcron
+    crontab -u vagrant /tmp/dreamcron
+    rm /tmp/dreamcron
   SHELL
 end

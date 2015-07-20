@@ -5,3 +5,4 @@
 *.PNG
 tmp.prototxt
 .vagrant
+.com.apple.timemachine.supported
